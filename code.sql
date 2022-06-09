@@ -3,9 +3,9 @@
 
 -- DDL
 CREATE TABLE users(
-  first_name varchar(64),
-  last_name varchar(64),
-  email varchar(100),
+  first_name varchar(64) NOT NULL,
+  last_name varchar(64) NOT NULL,
+  email varchar(100) NOT NULL,
   height numeric(3, 2),
   is_male bool,
   birthday date
@@ -13,10 +13,9 @@ CREATE TABLE users(
 
 --DML
 INSERT INTO users
-VALUES ('Test', 'Testovich', 'test@test.test', 1.60, true, '1999-1-1');
+VALUES (NULL, 'Testovich', 'test@test.test', 1.60, true, '1999-1-1');
 -- incomplete insert
-INSERT INTO users
-VALUES ('Test 2', 'Testovich 2','');
+INSERT INTO users DEFAULT VALUES;
 
 DROP TABLE users;
 /*
