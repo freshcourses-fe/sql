@@ -18,8 +18,11 @@ CREATE TABLE users(
   )
 );
 -- созадть табличку для сообщений
+CREATE EXTENSION "uuid-ossp";
+
+
 CREATE TABLE messages(
-  id bigserial PRIMARY KEY,
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   sending_user varchar(15) NOT NULL CHECK (sending_user != ''),
   target_user varchar(15) NOT NULL CHECK (target_user != ''),
   created_at timestamp NOT NULL DEFAULT current_timestamp,
