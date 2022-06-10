@@ -34,8 +34,21 @@ CREATE TABLE orders (
 --
 CREATE TABLE sellers (
   id serial PRIMARY KEY,
-  user_id int NOT NULL UNIQUE REFERENCES users, -- (1 : 1) из-за UNIQUE
+  user_id int NOT NULL UNIQUE REFERENCES users,
+  -- (1 : 1) из-за UNIQUE
   "address" text,
   phone text,
   created_at timestamp NOT NULL DEFAULT current_timestamp
 );
+-- n : m связующая таблица
+CREATE TABLE products_to_orders (
+  product_id int REFERENCES products,  -- пылесос
+  order_id int REFERENCES orders,  -- заказ 1 
+  quantity int NOT NULL CHECK (quantity > 0),  -- 5
+  PRIMARY KEY (product_id, order_id) -- составной певичный ключ
+);
+--
+ALTER TABLE products RENAME COLUMN manufacturer_id TO seller_id;
+--
+ALTER TABLE products
+ADD FOREIGN KEY (seller_id) REFERENCES sellers;
