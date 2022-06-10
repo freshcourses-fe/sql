@@ -31,3 +31,11 @@ CREATE TABLE orders (
   -- ссылаемся на таблицу users и столбец id (1 : m)
   created_at timestamp NOT NULL DEFAULT current_timestamp
 );
+--
+CREATE TABLE sellers (
+  id serial PRIMARY KEY,
+  user_id int NOT NULL UNIQUE REFERENCES users, -- (1 : 1) из-за UNIQUE
+  "address" text,
+  phone text,
+  created_at timestamp NOT NULL DEFAULT current_timestamp
+);
