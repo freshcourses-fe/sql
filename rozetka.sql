@@ -16,39 +16,59 @@ CREATE TABLE users(
   )
 );
 --
+CREATE TABLE sellers (
+  id serial PRIMARY KEY,
+  user_id int NOT NULL UNIQUE REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
+  -- (1 : 1) из-за UNIQUE
+  "address" text,
+  phone text,
+  created_at timestamp NOT NULL DEFAULT current_timestamp
+);
+--
 CREATE TABLE products(
   id serial PRIMARY KEY,
   "name" varchar(256) NOT NULL CHECK("name" != ''),
   price numeric(11, 2) NOT NULL CHECK(price > 0),
   quantity integer NOT NULL CHECK(quantity > 0),
   category varchar(256) NOT NULL CHECK(category != ''),
-  manufacturer_id bigint NOT NULL
+  seller_id bigint NOT NULL REFERENCES sellers ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-- ALTER TABLE products DROP CONSTRAINT "products_seller_id_fkey";
+-- ALTER TABLE products ADD FOREIGN KEY (seller_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE;
 --
 CREATE TABLE orders (
   id serial PRIMARY KEY,
-  buyer_id int NOT NULL REFERENCES users (id),
+  buyer_id int NOT NULL REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
   -- ссылаемся на таблицу users и столбец id (1 : m)
   created_at timestamp NOT NULL DEFAULT current_timestamp
 );
+
+-- ALTER TABLE orders DROP CONSTRAINT "orders_buyer_id_fkey";
+-- ALTER TABLE orders ADD FOREIGN KEY (buyer_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE;
 --
-CREATE TABLE sellers (
-  id serial PRIMARY KEY,
-  user_id int NOT NULL UNIQUE REFERENCES users,
-  -- (1 : 1) из-за UNIQUE
-  "address" text,
-  phone text,
-  created_at timestamp NOT NULL DEFAULT current_timestamp
-);
+
+
+-- ALTER TABLE sellers DROP CONSTRAINT "sellers_user_id_fkey";
+-- ALTER TABLE sellers ADD FOREIGN KEY (user_id)  REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE;
 -- n : m связующая таблица
 CREATE TABLE products_to_orders (
-  product_id int REFERENCES products,  -- пылесос
-  order_id int REFERENCES orders,  -- заказ 1 
+  product_id int REFERENCES products ON DELETE CASCADE ON UPDATE CASCADE,  -- пылесос
+  order_id int REFERENCES orders ON DELETE CASCADE ON UPDATE CASCADE,  -- заказ 1 
   quantity int NOT NULL CHECK (quantity > 0),  -- 5
   PRIMARY KEY (product_id, order_id) -- составной певичный ключ
 );
 --
-ALTER TABLE products RENAME COLUMN manufacturer_id TO seller_id;
---
-ALTER TABLE products
-ADD FOREIGN KEY (seller_id) REFERENCES sellers;
+-- ALTER TABLE products RENAME COLUMN manufacturer_id TO seller_id;
+-- --
+-- ALTER TABLE products
+-- ADD FOREIGN KEY (seller_id) REFERENCES sellers;
+
+
+DELETE FROM users WHERE id = 5;
+
+DROP TABLE products_to_orders;
+DROP TABLE products;
+DROP TABLE orders;
+DROP TABLE sellers;
+DROP TABLE users;
