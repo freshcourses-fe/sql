@@ -19,7 +19,7 @@ CREATE TABLE users(
 CREATE TABLE sellers (
   id serial PRIMARY KEY,
   user_id int NOT NULL UNIQUE REFERENCES users ON DELETE CASCADE ON UPDATE CASCADE,
-  -- (1 : 1) из-за UNIQUE
+  -- (0 : 1) из-за UNIQUE
   "address" text,
   phone text,
   created_at timestamp NOT NULL DEFAULT current_timestamp
