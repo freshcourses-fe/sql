@@ -30,5 +30,39 @@ SELECT * FROM users
 WHERE first_name IN ('John', 'Jane');
 
 -- найти всех юзеров которые ниже 1.80
+SELECT * FROM users WHERE height <= 1.8;
+-- найти все пользоваталей которым меньше 18 лет
+-- SELECT * FROM users WHERE '1991-1-1' <= birthday;
+SELECT  *, extract (year FROM age(birthday) ) as "Лет прожито" 
+FROM users WHERE age(birthday) <= INTERVAL '30 years 10 months';
 
--- найти все пользоваталей которым меньше 30 лет
+SELECT height FROM users
+GROUP BY height;
+
+SELECT is_male FROM users
+GROUP BY is_male;
+
+
+SELECT * FROM users
+WHERE is_male = true
+
+/*
+avg
+sum
+count
+min 
+max
+*/
+
+-- найти средний рост в зависмотсти от пола
+SELECT avg(height) "Средняя высота", is_male FROM users
+GROUP BY is_male;
+
+SELECT count(*) from users;
+
+/*
+в табличке товаров найти:
+  среднюю цену всех товаров
+  количество товаров с категорией Hardware
+  общую стоимость всех товаров (с учетом их количества)
+*/
