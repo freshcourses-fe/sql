@@ -77,3 +77,9 @@ SELECT count(*) FROM products
 WHERE category = 'Hardware';
 --
 SELECT sum(price * quantity) FROM products;
+-- Пагинация запросов
+SELECT * FROM products
+LIMIT 30; -- Показываем первые 30 результатов
+--
+SELECT * FROM products
+LIMIT 30 OFFSET 30; -- Пропускаем 30 и показываем 30 следующих
