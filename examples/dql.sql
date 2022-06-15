@@ -138,3 +138,36 @@ SELECT * FROM users
 ORDER BY height DESC,-- в первую очередь
 birthday ASC -- во вторую
 ;
+-- самые молодые пользователи
+SELECT * 
+FROM (
+  SELECT extract( 'year' from age(birthday)) as "age",* 
+  FROM users
+) AS "with_age"
+ORDER BY age;
+-- сколько у нас людей разных возрастов
+SELECT count(age), age 
+FROM (
+  SELECT extract( 'year' from age(birthday)) as "age",* 
+  FROM users
+) AS "with_age"
+GROUP BY age
+ORDER BY count(age) DESC;
+-- сколько у нас людей в возрасте от 30 до 50
+SELECT count(age) "количество", age 
+FROM (
+  SELECT extract( 'year' from age(birthday)) as "age",* 
+  FROM users
+) AS "with_age"
+WHERE age BETWEEN 30 AND 50
+GROUP BY age
+ORDER BY count(age) DESC;
+-- все группы в которых от 0 до 15 участников
+SELECT count(age) "количество", age 
+FROM (
+  SELECT extract( 'year' from age(birthday)) as "age",* 
+  FROM users
+) AS "with_age"
+GROUP BY age
+HAVING count(age)  < 15 -- фильтрация на уровне групп новосозданные псевдонимы не подхватывает 
+ORDER BY count(age) DESC;
