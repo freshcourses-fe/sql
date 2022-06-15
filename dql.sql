@@ -43,22 +43,26 @@ SELECT is_male FROM users
 GROUP BY is_male;
 
 
+SELECT category FROM products
+GROUP BY category;
+
 SELECT * FROM users
 WHERE is_male = true
 
 /*
-avg
-sum
-count
-min 
-max
+Агрегатные функции
+avg - среднее арифметическое
+sum - сумму
+count - количество строк
+min - инимальное значение
+max - максимальное значение
 */
 
 -- найти средний рост в зависмотсти от пола
 SELECT avg(height) "Средняя высота", is_male FROM users
 GROUP BY is_male;
 
-SELECT count(*) from users;
+SELECT count(id) from users;
 
 /*
 в табличке товаров найти:
@@ -66,3 +70,10 @@ SELECT count(*) from users;
   количество товаров с категорией Hardware
   общую стоимость всех товаров (с учетом их количества)
 */
+
+SELECT avg(price) FROM products;
+--
+SELECT count(*) FROM products
+WHERE category = 'Hardware';
+--
+SELECT sum(price * quantity) FROM products;
