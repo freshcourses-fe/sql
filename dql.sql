@@ -127,3 +127,14 @@ FROM (
     FROM users
   ) AS full_names_table
 WHERE "full name length" = 17;
+/*
+  Сортировка столбцов
+  ORDER BY [ ASC | DESC]
+*/
+SELECT * FROM users
+ORDER BY id DESC;
+--
+SELECT * FROM users
+ORDER BY height DESC,-- в первую очередь
+birthday ASC -- во вторую
+;
