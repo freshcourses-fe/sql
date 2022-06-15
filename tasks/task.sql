@@ -32,3 +32,6 @@ FROM (
 ) AS "with_age"
 ORDER BY age
 -- Найти все категории у которых количество товаров больше 200
+SELECT category, count(category) FROM products
+GROUP BY category
+HAVING count(category) >= 100;
