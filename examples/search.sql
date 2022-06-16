@@ -33,3 +33,5 @@ WHERE first_name SIMILAR TO '[T-X]%';
 /*
 Найти всех юзеров имена которых начинаются на H, заканчиваются на y  И фамилии которых начнинаются на B
 */
+SELECT * FROM users
+WHERE first_name ~ 'J.*e' AND last_name SIMILAR TO 'T%';
