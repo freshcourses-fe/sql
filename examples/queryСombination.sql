@@ -38,3 +38,15 @@ SELECT employee_id FROM employee_passwords;
 SELECT employee_id FROM employee
 EXCEPT
 SELECT employee_id FROM employee_passwords;
+/*
+ Найти id всех юзеров которые НЕ являются продавцами
+*/
+SELECT id FROM users
+EXCEPT
+SELECT user_id FROM sellers;
+/*
+ найдите id всех юзеров которые выполнили хоть один заказ
+*/
+SELECT id FROM users
+INTERSECT
+SELECT buyer_id FROM orders;
