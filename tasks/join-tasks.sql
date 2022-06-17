@@ -18,7 +18,10 @@ SELECT sum(pto.quantity) FROM products
 JOIN products_to_orders pto ON pto.product_id = products.id
 WHERE category = 'Food' AND pto.order_id = 5;
 -- 4 
-
+SELECT users.email, count(orders.id) FROM users
+JOIN orders ON orders.buyer_id = users.id
+GROUP BY users.id
+ORDER BY count(orders.id) DESC;
 /*
   найти самый популярный товар (вівести имя и категорию) (который есть в большем количестве заказов)
 */
