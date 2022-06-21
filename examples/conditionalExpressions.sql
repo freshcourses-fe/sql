@@ -65,3 +65,21 @@ SELECT sum(
   else 0
 END
 ) amount from products;
+-- COALESCE возвращает первое не NULL значение
+SELECT COALESCE(NULL , 42);
+
+ALTER TABLE products ADD COLUMN "description" TEXT;
+
+SELECT name, brand, COALESCE("description", 'Default product description') as "description" 
+FROM products;
+-- NULLIF возращаетн NULL если оба значения одинакові, иначе возвращает 1 из них
+
+SELECT NULLIF(12, 15); -- 12
+
+SELECT NULLIF('test','test'); -- NULL
+SELECT NULLIF(NULL, NULL); -- NULL
+SELECT name, brand, NULLIF("description", 'Default product description') as "description" 
+FROM products;
+
+SELECT GREATEST(5,8,30,99,-100); -- 99
+SELECT LEAST(5,8,30,99,-100); -- -100
