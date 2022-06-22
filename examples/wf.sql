@@ -97,7 +97,8 @@ SELECT
   price,
   quantity,
   sum(price * quantity) OVER () total_price_of_all,
-  sum(price * quantity)
+  sum(price * quantity),
+  avg(price) OVER () average_price
 FROM
   products
 GROUP BY
@@ -105,3 +106,6 @@ GROUP BY
 ORDER BY
   id;
 
+
+-- вывести инфу про пользователей и количесто их заказов с помощью оконной функции
+-- найдите самого активного покупателя
