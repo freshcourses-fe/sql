@@ -109,3 +109,7 @@ ORDER BY
 
 -- вывести инфу про пользователей и количесто их заказов с помощью оконной функции
 -- найдите самого активного покупателя
+SELECT users.*, count(orders) OVER (PARTITION BY users.id)  total_orders
+FROM users
+JOIN orders ON orders.buyer_id = users.id
+ORDER BY total_orders DESC;
